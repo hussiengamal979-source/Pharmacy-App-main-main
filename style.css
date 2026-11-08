@@ -1,0 +1,858 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'cairo', sans-serif;
+}
+body {
+    background-color: #0b1411;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+}
+.app-container {
+    width: 100%;
+    max-width: 420px;
+    background-color: #0f1916;
+    padding: 20px 16px 100px 16px;
+    min-height: 100vh;
+    position: relative;
+}
+#home-page .section-title {
+    text-align: right;
+}
+.page-content {
+    display: none !important;
+}
+.page-content.active {
+    display: flex !important;
+    flex-direction: column !important;
+    animation: fadeIn 0.3s ease-in-out;
+}
+@keyframes fadeIn{
+    from { opacity: 0; transform: translateY(6px);}
+    to { opacity: 1; transform: translateY(0);}
+}
+.main-title {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    color: #ffffff;
+}
+.section-title {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: #ffffff;
+}
+.section {
+    margin-bottom: 20px;
+}
+.quick-tags, .category-filters {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    direction: rtl;
+}
+.quick-tags::-webkit-scrollbar, .category-filters::-webkit-scrollbar {
+    display: none;
+}
+.tag-btn .filter-btn {
+    background-color: #172723;
+    border: 1px solid #233833;
+    color: #e0e0e0;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: 0.2s;
+}
+.filter-btn.active {
+    background-color: #1eb992;
+    color: #0b1411;
+    font-weight: 700;
+    border-color: #1eb992;
+}
+.prescription-card {
+    background-color: #152420;
+    border: 1px solid #203530;
+    border-radius: 16px;
+    padding: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    direction: rtl;
+    text-align: right;
+    cursor: pointer;
+}
+.prescription-info h3 {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+.prescription-info p {
+    font-size: 13px;
+    color: #8da49c;
+}
+.prescription-icon {
+    font-size: 28px;
+    background-color: #1d332d;
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.products-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+.product-card {
+    background-color: #152420;
+    border: 1px solid #203530;
+    border-radius: 16px;
+    padding: 12px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.product-img-box {
+    background-color: #1b2f29;
+    width: 100%;
+    height: 100px;
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+.product-emoji {
+    font-size: 38px;
+}
+.product-name {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 2px;
+    color: #ffffff;
+}
+.product-category {
+    font-size: 12px;
+    color: #8da49c;
+    margin-bottom: 6px;
+}
+.product-price {
+    font-size: 15px;
+    font-weight: 700;
+    color: #1eb992;
+}
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 420px;
+    background-color: #0f1916;
+    border-top: 1px solid #1e312b;
+    display: flex;
+    justify-content: space-around;
+    padding: 12px 0;
+    z-index: 999;
+}
+.nav-item {
+    text-decoration: none;
+    color: #617b73;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 12px;
+    gap: 4px;
+    transition: 0.2s;
+}
+.nav-item i {
+    font-size: 18px;
+}
+.nav-item.active {
+    color: #1eb992;
+}
+
+
+/* صفحة الأقسام - نفس تصميم الصفحة الرئيسية */
+
+#categories-page {
+    width: 100%;
+    max-width: 560px;
+    margin: 0 auto;
+    padding: 15px;
+    box-sizing: border-box;
+    direction: rtl;
+}
+
+/* عناوين الأقسام */
+#categories-page .main-title,
+#categories-page .section-title {
+    text-align: right;
+}
+
+/* فلاتر الأقسام */
+#categories-page .categories-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 25px;
+}
+
+/* المنتجات */
+#categories-page .product-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    width: 100%;
+}
+
+/* كارت المنتج */
+#categories-page .product-card {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    padding: 12px;
+    border-radius: 22px;
+    text-align: center;
+}
+
+/* صورة المنتج */
+#categories-page .product-img-box {
+    width: 100%;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 18px;
+    margin-bottom: 10px;
+}
+
+/* الشاشات الصغيرة */
+@media (max-width: 400px) {
+    #categories-page {
+        padding: 10px;
+    }
+
+    #categories-page .product-grid {
+        gap: 8px;
+    }
+
+    #categories-page .product-img-box {
+        height: 110px;
+    }
+}
+.categories-filters, .quick-tags {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    direction: rtl;
+}
+.category-filters::-webkit-scrollbar, .quick-tags::-webkit-scrollbar {
+    display: none;
+}
+.filter-btn, .tag-btn {
+    background-color: #152420;
+    border: 1px solid #203530;
+    color: #ffffff;
+    padding: 8px 18px;
+    border-radius: 20px;
+    font-size: 14px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: 0.2s;
+}
+.filter-btn.active {
+    background-color: #1eb992;
+    color: #0b1411;
+    font-weight: 700;
+    border-color: #1eb992;
+}
+
+
+/* الكروت القابلة للضغط */
+#product-details-page.active {
+    display: flex;
+    flex-direction: column;
+}
+
+.clickable-card {
+    cursor: pointer;
+    transition: transform 0.2s, border-color 0.2s;
+}
+
+.clickable-card:hover {
+    border-color: #1eb992;
+    transform: translateY(-2px);
+}
+.vitamin-card {
+    cursor: pointer;
+    transition: transform 0.2s, border-color 0.2s;
+}
+
+.vitamin-card:hover {
+    border-color: #1eb992;
+    transform: translateY(-2px);
+}
+
+.thermometer-card {
+    cursor: pointer;
+    transition: transform 0.2s, border-color 0.2s;
+}
+
+.thermometer-card:hover {
+    border-color: #1eb992;
+    transform: translateY(-2px);
+}
+
+.wash-card {
+    cursor: pointer;
+    transition: transform 0.2s, border-color 0.2s;
+}
+
+.wash-card:hover {
+    border-color: #1eb992;
+    transform: translateY(-2px);
+}
+
+#product-details-page.active{
+    display: flex !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+/* صفحة التفاصيل */
+.details-container {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 16px;
+    direction: rtl;
+    text-align: right;
+    width: 100%;
+    padding: 16px;
+}
+
+.details-img-box {
+    background-color: #152420;
+    border: 1px solid #203530;
+    border-radius: 20px;
+    height: 220px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.details-emoji {
+    font-size: 85px;
+}
+
+.details-header {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.details-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.price-stock-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 6px;
+}
+
+.details-price {
+    font-size: 20px;
+    font-weight: 700;
+    color: #1eb992;
+}
+
+.stock-badge {
+    background-color: #17332b;
+    color: #1eb992;
+    border: 1px solid #1eb992;
+    padding: 2px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+}
+
+.details-subtitle {
+    font-size: 16px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 6px;
+}
+
+.details-desc {
+    font-size: 14px;
+    color: #9cb0a9;
+    line-height: 1.6;
+}
+
+.quantity-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 8px;
+}
+
+.quantity-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background-color: #152420;
+    border: 1px solid #203530;
+    border-radius: 12px;
+    padding: 4px 8px;
+}
+
+.qty-btn {
+    background-color: #1d332d;
+    border: none;
+    color: #1eb992;
+    font-size: 18px;
+    font-weight: 700;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.qty-number {
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.add-to-cart-btn {
+    background-color: #1eb992;
+    color: #0b1411;
+    border: none;
+    width: 100%;
+    padding: 14px;
+    border-radius: 14px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 10px;
+}
+#product-details-page{
+    width: 100%;
+}
+
+body::-webkit-scrollbar,
+html::-webkit-scrollbar,
+.app-container::-webkit-scrollbar {
+    display: none !important;
+}
+body,html, .app-container {
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+}
+
+/* =================================
+   بداية تنسيق صفحات حسابي - العكيل
+================================= */
+
+.auth-page {
+    display: none;
+    min-height: 75vh;
+    padding: 30px 15px;
+    align-items: center;
+    justify-content: center;
+    background-color: #0f1916;
+}
+
+.auth-page.active {
+    display: flex !important;
+}
+
+.auth-container {
+    width: 100%;
+    max-width: 420px;
+    margin: auto;
+    padding: 30px 22px;
+    background-color: #152420;
+    border: 1px solid #203530;
+    border-radius: 18px;
+    text-align: center;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.auth-container .logo {
+    width: 65px;
+    height: 65px;
+    margin: 0 auto 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #1eb992;
+    color: #ffffff;
+    font-size: 35px;
+    border-radius: 50%;
+}
+
+.auth-container h1,
+.auth-container h2 {
+    color: #ffffff;
+    margin-bottom: 12px;
+    font-size: 23px;
+}
+
+.auth-container .subtitle {
+    color: #8da49c;
+    margin-bottom: 25px;
+    font-size: 14px;
+}
+
+.auth-container form {
+    display: flex;
+    flex-direction: column;
+    text-align: right;
+    gap: 12px;
+}
+
+.auth-container label {
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.auth-container input {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid #30483f;
+    border-radius: 10px;
+    background-color: #0f1916;
+    color: #ffffff;
+    outline: none;
+    font-size: 15px;
+    box-sizing: border-box;
+}
+
+.auth-container input:focus {
+    border-color: #1eb992;
+    box-shadow: 0 0 5px rgba(30, 185, 146, 0.3);
+}
+
+.auth-container input::placeholder {
+    color: #8da49c;
+}
+
+.tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 22px;
+}
+
+.tabs button {
+    flex: 1;
+    padding: 11px;
+    border: 1px solid #30483f;
+    border-radius: 8px;
+    background-color: #0f1916;
+    color: #8da49c;
+    cursor: pointer;
+}
+
+.tabs button.active {
+    background-color: #1eb992;
+    color: #ffffff;
+    border-color: #1eb992;
+}
+
+.tabs button:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.main-btn {
+    width: 100%;
+    padding: 14px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 10px;
+    background-color: #1eb992;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.main-btn:hover {
+    background-color: #159b79;
+    transform: translateY(-2px);
+}
+
+.text-link {
+    margin-top: 18px;
+    border: none;
+    background: none;
+    color: #1eb992;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.footer-text {
+    margin-top: 25px;
+    color: #8da49c;
+    font-size: 12px;
+}
+
+#message,
+#otpMessage,
+#forgotMessage,
+#resetMessage {
+    font-size: 13px;
+    color: #ff7777;
+    margin: 5px 0;
+}
+
+/* صفحة النجاح */
+
+.success-card {
+    width: 100%;
+    max-width: 420px;
+    padding: 35px 22px;
+    margin: auto;
+    text-align: center;
+    background-color: #152420;
+    border: 1px solid #203530;
+    border-radius: 18px;
+}
+
+.success-icon {
+    width: 85px;
+    height: 85px;
+    margin: 0 auto 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: #1eb992;
+    color: #ffffff;
+    font-size: 48px;
+}
+
+.success-card h2 {
+    color: #1eb992;
+    margin-bottom: 15px;
+}
+
+.success-card p {
+    color: #8da49c;
+    line-height: 1.8;
+    margin-bottom: 20px;
+}
+
+/* تنسيق شاشات الموبايل */
+
+@media (max-width: 480px) {
+    .auth-page {
+        padding: 20px 12px;
+    }
+
+    .auth-container,
+    .success-card {
+        padding: 25px 17px;
+    }
+
+    .auth-container h1,
+    .auth-container h2 {
+        font-size: 20px;
+    }
+
+    .main-btn {
+        font-size: 15px;
+    }
+}
+
+
+/* =================================
+   كلاسات إخفاء العناصر وتنسيق صفحة الروشتة
+================================= */
+
+/* كلاس لإخفاء الأقسام والصفحات تماماً عند استخدام الـ hidden */
+.hidden {
+    display: none !important;
+}
+
+/* دعم إضافي لإخفاء الصفحة الرئيسية أو صفحة الروشتة بالتوافق مع الـ hidden */
+#home-page.hidden,
+#prescriptionScreen.hidden {
+    display: none !important;
+}
+
+/* --- صفحة الروشتة (السلة) --- */
+.prescription-screen {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+/* Header */
+.header {
+    text-align: center;
+    padding: 24px 16px;
+    background-color: #0f191c;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header h1 {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #ffffff;
+    text-align: right;
+    flex: 1;
+}
+
+.back-btn {
+    background: none;
+    border: none;
+    color: #1dd1a1;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 5px 10px;
+}
+
+/* Content Body */
+.content {
+    flex: 1;
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+/* Upload Card (Dashed Border) */
+.upload-card {
+    border: 1.5px dashed #2d444a;
+    border-radius: 16px;
+    background-color: #121e21;
+    padding: 35px 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-bottom: 28px;
+}
+
+.upload-card:hover {
+    border-color: #1dd1a1;
+    background-color: #152428;
+}
+
+.camera-icon-wrapper {
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: center;
+}
+
+.camera-icon {
+    width: 70px;
+    height: 70px;
+}
+
+.upload-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+}
+
+.upload-subtitle {
+    font-size: 0.9rem;
+    color: #7e949c;
+}
+
+.file-name-display {
+    margin-top: 10px;
+    font-size: 0.85rem;
+    color: #1dd1a1;
+    word-break: break-all;
+}
+
+/* Notes Section */
+.notes-section {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 24px;
+    text-align: right;
+}
+
+.notes-label {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.notes-textarea {
+    width: 100%;
+    height: 120px;
+    background-color: #121e21;
+    border: 1px solid #24353a;
+    border-radius: 12px;
+    padding: 14px;
+    color: #ffffff;
+    font-size: 0.95rem;
+    resize: vertical;
+    outline: none;
+    transition: border-color 0.2s;
+    text-align: right;
+}
+
+.notes-textarea::placeholder {
+    color: #4a6168;
+}
+
+.notes-textarea:focus {
+    border-color: #1dd1a1;
+}
+
+/* Submit Button */
+.submit-btn {
+    width: 100%;
+    background-color: #1dd1a1;
+    color: #ffffff;
+    border: none;
+    border-radius: 12px;
+    padding: 16px;
+    font-size: 1.05rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+    margin-bottom: 20px;
+}
+
+.submit-btn:hover {
+    background-color: #10ac84;
+}
+
+.submit-btn:active {
+    transform: scale(0.99);
+}
+
+/* =================================
+   نهاية تنسيق صفحات حسابي
+================================= */

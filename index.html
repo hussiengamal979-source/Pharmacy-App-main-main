@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Pharmacy App</title>
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- الصفحة الرئيسية -->
+   <main id="home-page" class="page-content active">
+    
+    <!-- 1. الأقسام السريعة -->
+    <section class="section">
+        <h2 class="section-title">الأقسام السريعة</h2>
+        <div class="quick-tags">
+            <button class="tag-btn">😊 أطفال</button>
+            <button class="tag-btn">💊 تجميل</button>
+            <button class="tag-btn">💄 عناية</button>
+            <button class="tag-btn">💊 أدوية</button>
+        </div>
+    </section>
+
+    <!-- 2. كارت عندك روشتة؟ (الزر اللي هتدوس عليه) -->
+    <section class="section">
+        <div class="prescription-card" id="openPrescriptionBtn">
+            <div class="prescription-info">
+                <h3>عندك روشتة؟</h3>
+                <p>ارفعها والصيدلي يجهزها لك</p>
+            </div>
+            <div class="prescription-icon">📄</div>
+        </div>
+    </section>
+
+    <!-- 3. منتجات مميزة -->
+    <section class="section">
+        <h2 class="section-title">منتجات مميزة</h2>
+        <div class="products-grid">
+            <div class="product-card clickable-card">
+                <div class="product-img-box"><span class="product-emoji">🧴</span></div>
+                <h4 class="product-name">كريم مرطب</h4>
+                <p class="product-category">عناية بالبشرة</p>
+                <div class="product-price">185 ج.م</div>
+            </div>
+            <div class="product-card vitamin-card">
+                <div class="product-img-box"><span class="product-emoji">💊</span></div>
+                <h4 class="product-name">فيتامين سي</h4>
+                <p class="product-category">مكمل غذائي</p>
+                <div class="product-price">120 ج.م</div>
+            </div>
+            <div class="product-card wash-card">
+                <div class="product-img-box"><span class="product-emoji">🧼</span></div>
+                <h4 class="product-name">غسول الوجه</h4>
+                <p class="product-category">البشرة الدهنية</p>
+                <div class="product-price">95 ج.م</div>
+            </div>
+            <div class="product-card thermometer-card">
+                <div class="product-img-box"><span class="product-emoji">🌡️</span></div>
+                <h4 class="product-name">ترمومتر رقمي</h4>
+                <p class="product-category">أجهزة</p>
+                <div class="product-price">160 ج.م</div>
+            </div>
+        </div>
+    </section>
+
+</main> <!-- قفلة الصفحة الرئيسية هنا -->   
+
+
+
+
+
+        <!-- صفحة الروشتة (منفصلة ومخفية تماماً لحد ما تضغط على الكارت) -->
+<div id="prescriptionScreen" class="prescription-screen hidden">
+    <!-- Header -->
+    <header class="header">
+        <button class="back-btn" id="backBtn">الرجوع ←</button>
+        <h1>رفع الوصفة الطبية</h1>
+    </header>
+
+    <!-- Main Content -->
+    <div class="content">
+        <!-- Upload Box -->
+        <div class="upload-card" id="uploadCard">
+            <input type="file" id="fileInput" accept="image/*" hidden>
+
+            <div class="camera-icon-wrapper">
+                <svg class="camera-icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="6" y="18" width="52" height="38" rx="8" fill="#5A6D74" />
+                    <path d="M22 18L26 12H38L42 18H22Z" fill="#5A6D74" />
+                    <circle cx="32" cy="37" r="12" fill="#1C272B" />
+                    <circle cx="32" cy="37" r="9" fill="#19A79A" />
+                    <circle cx="32" cy="37" r="5" fill="#0A181C" />
+                    <circle cx="48" cy="25" r="2.5" fill="#E2E8F0" />
+                    <rect x="10" y="22" width="10" height="4" rx="2" fill="#E2E8F0" />
+                </svg>
+            </div>
+
+            <h3 class="upload-title">اضغط لالتقاط أو رفع صورة الروشتة</h3>
+            <p class="upload-subtitle">سيراجعها الصيدلي ويجهز الأدوية</p>
+            <img id="imagePreview" src="" alt="معاينة الروشتة" style="display: none; width: 100%; max-height: 250px; object-fit: contain; border-radius: 8px; margin-top: 10px;" />
+            <p id="fileNameDisplay" class="file-name-display"></p>
+        </div>
+
+        <!-- Notes Input Section -->
+        <div class="notes-section">
+            <label for="notesInput" class="notes-label">ملاحظات (اختياري)</label>
+            <textarea id="notesInput" class="notes-textarea"
+                placeholder="مثال: عندي حساسية من البنسلين"></textarea>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="button" class="submit-btn" id="submitBtn">إرسال للصيدلي</button>
+    </div>
+</div>
+        <!-- صفحة الأقسام -->
+        <main id="categories-page" class="page-content">
+            <section class="section">
+                <h2 class="main-title">تصفح الأقسام</h2>
+                <div class="categories-filters">
+                    <button class="filter-btn active">الكل</button>
+                    <button class="filter-btn">عناية</button>
+                    <button class="filter-btn">أدوية</button>
+                    <button class="filter-btn">تجميل</button>
+                    <button class="filter-btn">أطفال</button>
+                </div>
+            </section>
+
+            <section class="section">
+                <h3 class="section-title">عناية</h3>
+                <div class="product-grid">
+                    <div class="product-card clickable-card">
+                        <div class="product-img-box"><span class="product-emoji">🧴</span></div>
+                        <h4 class="product-name">كريم مرطب</h4>
+                        <p class="product-category">عناية</p>
+                        <div class="product-price">185 ج.م</div>
+                    </div>
+                    <div class="product-card clickable-card">
+                        <div class="product-img-box"><span class="product-emoji">🧼</span></div>
+                        <h4 class="product-name">غسول</h4>
+                        <p class="product-category">عناية</p>
+                        <div class="product-price">95 ج.م</div>
+                    </div>
+                    <div class="product-card clickable-card">
+                        <div class="product-img-box"><span class="product-emoji">💧</span></div>
+                        <h4 class="product-name">واقي شمس</h4>
+                        <p class="product-category">عناية</p>
+                        <div class="product-price">210 ج.م</div>
+                    </div>
+                    <div class="product-card clickable-card">
+                        <div class="product-img-box"><span class="product-emoji">🦷</span></div>
+                        <h4 class="product-name">معجون أسنان</h4>
+                        <p class="product-category">عناية</p>
+                        <div class="product-price">60 ج.م</div>
+                    </div>
+                </div>
+            </section>
+
+        </main> <!-- قفلة الأقسام -->
+        <!-- صفحة تفاصيل المنتج -->
+        <main id="product-details-page" class="page-content">
+            <div class="details-container">
+                <div class="details-img-box">
+                    <span class="details-emoji">🧴</span>
+                </div>
+                <div class="details-header">
+                    <h2 class="details-title">كريم مرطب للبشرة الجافة</h2>
+                    <div class="price-stock-row">
+                        <span class="stock-badge">متوفر</span>
+                        <span class="details-price">185 ج.م</span>
+                    </div>
+                </div>
+                <div class="details-section">
+                    <h3 class="details-subtitle">الوصف</h3>
+                    <p class="details-desc">كريم مرطب بتركيبة لطيفة يرطب البشرة لمدة 24 ساعة، مناسب للاستخدام اليومي.
+                    </p>
+                </div>
+                <div class="quantity-section">
+                    <span class="quantity-label">الكمية</span>
+                    <div class="quantity-controls">
+                        <button class="qty-btn" id="minus-btn">-</button>
+                        <span class="qty-number" id="qty-count">1</span>
+                        <button class="qty-btn" id="plus-btn">+</button>
+                    </div>
+                </div>
+                <button class="add-to-cart-btn" id="add-cream-btn">
+                    إضافة إلى السلة 🛒
+                </button>
+            </div>
+        </main> <!-- قفلة صفحة التفاصيل -->
+
+        <!-- صفحة تفاصيل المنتج (فيتامين سي) -->
+        <main id="vitamin-details-page" class="page-content">
+            <div class="details-container">
+                <div class="details-img-box">
+                    <span class="details-emoji">💊</span>
+                </div>
+                <div class="details-header">
+                    <h2 class="details-title">فيتامين سي 1000 ملجم</h2>
+                    <div class="price-stock-row">
+                        <span class="stock-badge">متوفر</span>
+                        <span class="details-price">120 ج.م</span>
+                    </div>
+                </div>
+                <div class="details-section">
+                    <h3 class="details-subtitle">الوصف</h3>
+                    <p class="details-desc">مكمل غذائي لدعم المناعة وإمداد الجسم بفيتامين سي اللازم للحيوية والنشاط
+                        اليومي.</p>
+                </div>
+                <div class="quantity-section">
+                    <span class="quantity-label">الكمية</span>
+                    <div class="quantity-controls">
+                        <button class="qty-btn" id="minus-btn-vit">-</button>
+                        <span class="qty-number" id="qty-count-vit">1</span>
+                        <button class="qty-btn" id="plus-btn-vit">+</button>
+                    </div>
+                </div>
+                <button class="add-to-cart-btn" id="add-vit-btn">
+                    إضافة إلى السلة 🛒
+                </button>
+            </div>
+        </main>
+
+        <!-- صفحة تفاصيل الترمومتر الرقمي -->
+        <main id="thermometer-details-page" class="page-content">
+            <div class="details-container">
+                <div class="details-img-box">
+                    <span class="details-emoji">🌡️</span>
+                </div>
+                <div class="details-header">
+                    <h2 class="details-title">ترمومتر رقمي لقياس الحرارة</h2>
+                    <div class="price-stock-row">
+                        <span class="stock-badge">متوفر</span>
+                        <span class="details-price">160 ج.م</span>
+                    </div>
+                </div>
+                <div class="details-section">
+                    <h3 class="details-subtitle">الوصف</h3>
+                    <p class="details-desc">ترمومتر رقمي دقيق وسريع في قياس الحرارة، مناسب للاستخدام المنزلي ولجميع
+                        أفراد الأسرة.</p>
+                </div>
+                <div class="quantity-section">
+                    <span class="quantity-label">الكمية</span>
+                    <div class="quantity-controls">
+                        <!-- غيرنا الـ id هنا عشان ميتعارضش مع اللي قبله -->
+                        <button class="qty-btn" id="minus-btn-thermo">-</button>
+                        <span class="qty-number" id="qty-count-thermo">1</span>
+                        <button class="qty-btn" id="plus-btn-thermo">+</button>
+                    </div>
+                </div>
+                <button class="add-to-cart-btn" id="add-thermo-btn">
+                    إضافة إلى السلة 🛒
+                </button>
+            </div>
+        </main>
+
+        <!-- صفحة تفاصيل غسول الوجه -->
+        <main id="wash-details-page" class="page-content">
+            <div class="details-container">
+                <div class="details-img-box">
+                    <span class="details-emoji">🧼</span>
+                </div>
+                <div class="details-header">
+                    <h2 class="details-title">غسول الوجه للبشرة الدهنية</h2>
+                    <div class="price-stock-row">
+                        <span class="stock-badge">متوفر</span>
+                        <span class="details-price">95 ج.م</span>
+                    </div>
+                </div>
+                <div class="details-section">
+                    <h3 class="details-subtitle">الوصف</h3>
+                    <p class="details-desc">غسول يومي لطيف ينظف البشرة بعمق ويزيل الدهون الزائدة دون أن يسبب الجفاف،
+                        مناسب للاستخدام اليومي.</p>
+                </div>
+                <div class="quantity-section">
+                    <span class="quantity-label">الكمية</span>
+                    <div class="quantity-controls">
+                        <!-- غيرنا الـ id هنا -->
+                        <button class="qty-btn" id="minus-btn-wash">-</button>
+                        <span class="qty-number" id="qty-count-wash">1</span>
+                        <button class="qty-btn" id="plus-btn-wash">+</button>
+                    </div>
+                </div>
+                <button class="add-to-cart-btn" id="add-wash-btn">
+                    إضافة إلى السلة 🛒
+                </button>
+            </div>
+        </main>
+
+        <!-- صفحة السلة -->
+        <main id="cart-page" class="page-content">
+            <div class="cart-container" style="padding: 15px; direction: rtl;">
+                <h2 class="section-title" style="text-align: center; margin-bottom: 20px;">سلة المشتريات</h2>
+
+                <!-- هنا الجافاسكريبت هترمي المنتجات اللي إنت ضفتها -->
+                <div id="cart-items-container">
+                    <!-- المنتجات هتظهر هنا ديناميكياً -->
+                </div>
+
+                <!-- باقي تصميم السلة (العنوان، الدفع، الإجمالي) -->
+                <div class="cart-address" style="margin-top: 20px;">
+                    <h3 class="section-title">عنوان التوصيل</h3>
+                    <input type="text" placeholder="العنوان بالتفصيل"
+                        style="width: 100%; padding: 12px; background: #152420; border: 1px solid #203530; border-radius: 10px; color: white; margin-top: 10px;">
+                </div>
+
+                <div class="cart-payment" style="margin-top: 20px;">
+                    <h3 class="section-title">طريقة الدفع</h3>
+                    <div style="background: #152420; padding: 15px; border-radius: 10px; margin-top: 10px;">
+                        <label style="display: block; margin-bottom: 10px;"><input type="radio" name="pay" checked>
+                            الدفع عند الاستلام</label>
+                        <label style="display: block; margin-bottom: 10px;"><input type="radio" name="pay"> بطاقة
+                            بنكية</label>
+                        <label style="display: block;"><input type="radio" name="pay"> محفظة إلكترونية</label>
+                    </div>
+                </div>
+
+                <div class="cart-summary"
+                    style="background: #152420; padding: 15px; border-radius: 10px; margin-top: 20px;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                        <span>المنتجات</span>
+                        <span id="cart-subtotal">0 ج.م</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                        <span>التوصيل</span>
+                        <span>30 ج.م</span>
+                    </div>
+                    <hr style="border-color: #203530; margin: 10px 0;">
+                    <div
+                        style="display: flex; justify-content: space-between; font-weight: bold; color: #1eb992; font-size: 18px;">
+                        <span>الإجمالي</span>
+                        <span id="cart-total">0 ج.م</span>
+                    </div>
+                </div>
+
+                <button class="add-to-cart-btn" style="margin-top: 20px;">إتمام الطلب</button>
+            </div>
+        </main>
+
+        <!-- الشريط السفلي -->
+        <nav class="bottom-nav">
+            <a href="#" class="nav-item active" data-target="home-page">
+                <span>الرئيسية 🏠</span>
+            </a>
+            <a href="#" class="nav-item" data-target="categories-page">
+                <span>الأقسام 📂</span>
+            </a>
+            <a href="#" class="nav-item" data-target="cart-page">
+                <span>السلة 🛒</span>
+            </a>
+            <a href="#" class="nav-item" data-target="profile-page">
+                <span>حسابي 👤</span>
+            </a>
+        </nav>
+
+        <!-- بداية صفحات حسابي -->
+
+        <!-- 1- تسجيل الدخول -->
+        <main id="profile-page" class="page-content auth-page">
+
+            <div class="auth-container">
+
+                <div class="logo">✚</div>
+
+                <h1>مرحباً بك في صيدلية العكيل</h1>
+                <p class="subtitle">سجل الدخول للمتابعة</p>
+
+                <div class="tabs">
+                    <button type="button" class="active">رقم الموبايل</button>
+                    <button type="button" disabled>البريد الإلكتروني</button>
+                </div>
+
+                <form id="phoneForm">
+                    <label for="phone">رقم الموبايل</label>
+
+                    <input type="tel" id="phone" placeholder="01XXXXXXXXX" maxlength="11" required>
+
+                    <p id="message"></p>
+
+                    <button type="submit" class="main-btn">
+                        إرسال رمز التحقق
+                    </button>
+                </form>
+
+                <button type="button" class="text-link" data-auth-target="forgot-page">
+                    نسيت كلمة المرور؟
+                </button>
+
+                <p class="footer-text">صيدلية العكيل - صحتك تهمنا</p>
+
+            </div>
+        </main>
+
+
+        <!-- 2- التحقق من رقم الموبايل -->
+        <main id="verify-page" class="page-content auth-page">
+
+            <div class="auth-container">
+
+                <div class="logo">✚</div>
+
+                <h1>التحقق من رقم الموبايل</h1>
+                <p class="subtitle">أدخل رمز التحقق المكون من 6 أرقام</p>
+
+                <form id="otpForm">
+
+                    <label for="otp">رمز التحقق</label>
+
+                    <input type="text" id="otp" maxlength="6" inputmode="numeric" placeholder="أدخل الرمز" required>
+
+                    <p id="otpMessage"></p>
+
+                    <button type="submit" class="main-btn">
+                        تأكيد الرمز
+                    </button>
+
+                </form>
+
+                <p class="footer-text">صيدلية العكيل</p>
+
+            </div>
+        </main>
+
+
+        <!-- 3- نجاح التحقق -->
+        <main id="success-page" class="page-content auth-page">
+
+            <div class="success-card">
+
+                <div class="success-icon">✓</div>
+
+                <h2>تم التحقق بنجاح!</h2>
+
+                <p>
+                    تم التأكد من رقم هاتفك بنجاح.
+                    يمكنك الآن المتابعة.
+                </p>
+
+                <button type="button" class="main-btn" data-auth-target="profile-page">
+                    العودة لحسابي
+                </button>
+
+            </div>
+        </main>
+
+
+        <!-- 4- نسيت كلمة المرور -->
+        <main id="forgot-page" class="page-content auth-page">
+
+            <div class="auth-container">
+
+                <div class="logo">✚</div>
+
+                <h2>نسيت كلمة المرور؟</h2>
+
+                <p class="subtitle">
+                    أدخل رقم الموبايل لإرسال رمز التحقق
+                </p>
+
+                <form id="forgotForm">
+
+                    <label for="forgotPhone">رقم الموبايل</label>
+
+                    <input type="tel" id="forgotPhone" maxlength="11" placeholder="01XXXXXXXXX" required>
+
+                    <p id="forgotMessage"></p>
+
+                    <button type="submit" class="main-btn">
+                        إرسال
+                    </button>
+
+                </form>
+
+                <button type="button" class="text-link" data-auth-target="profile-page">
+                    العودة لتسجيل الدخول
+                </button>
+
+            </div>
+        </main>
+
+
+        <!-- 5- إعادة تعيين كلمة المرور -->
+        <main id="reset-page" class="page-content auth-page">
+
+            <div class="auth-container">
+
+                <div class="logo">✚</div>
+
+                <h2>إعادة تعيين كلمة المرور</h2>
+
+                <p class="subtitle">
+                    أدخل رمز التحقق وكلمة المرور الجديدة
+                </p>
+
+                <form id="resetForm">
+
+                    <label for="resetCode">رمز التحقق</label>
+
+                    <input type="text" id="resetCode" maxlength="6" inputmode="numeric" required>
+
+                    <label for="newPassword">كلمة المرور الجديدة</label>
+
+                    <input type="password" id="newPassword" required>
+
+                    <label for="confirmPassword">تأكيد كلمة المرور</label>
+
+                    <input type="password" id="confirmPassword" required>
+
+                    <p id="resetMessage"></p>
+
+                    <button type="submit" class="main-btn">
+                        تغيير كلمة المرور
+                    </button>
+
+                </form>
+
+            </div>
+        </main>
+
+
+        <!-- 6- نجاح تغيير كلمة المرور -->
+        <main id="password-success-page" class="page-content auth-page">
+
+            <div class="success-card">
+
+                <div class="success-icon">✓</div>
+
+                <h2>تم بنجاح!</h2>
+
+                <p>تم تغيير كلمة المرور بنجاح</p>
+
+                <button type="button" class="main-btn" data-auth-target="profile-page">
+                    ابدأ تسوق الصيدلية
+                </button>
+
+            </div>
+        </main>
+
+        <!-- نهاية صفحات حسابي -->
+
+    </div>
+
+
+    <script src="script.js"></script>
+</body>
+
+</html>
